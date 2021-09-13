@@ -1,0 +1,39 @@
+﻿
+@page "/army"
+@inject IUnitService UnitService
+@attribute [Authorize]
+
+<h3>My Army</h3>
+@if (UnitService.Units.Count > 0)
+{
+    <table class="table">
+        @foreach (var userUnit in UnitService.MyUnits)
+        {
+            <tr>
+                <td>
+                    @switch (userUnit.UnitID)
+                    {
+                        case 1:<img src="/Icons/Knight.png" /> break;
+                        case 2:<img src="/Icons/Archer.png" /> break;
+                        case 3:<img src="/Icons/Mage.png" />break;
+                    }
+                </td>
+                <td>
+                    @UnitService.Units.First(unit => unit.Id == userUnit.UnitID).Title
+                </td>
+                <td>
+                    @userUnit.HitPoints HP
+                </td>
+            </tr>
+        }
+    </table> }
+else
+{
+    <span>Loading Units...</span>
+}
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await UnitService.LoadUnitsAsync();
+    }
+}
