@@ -10,7 +10,18 @@ namespace BlazorFirstBlood.Client.Services
         event Action OnChange;
         int Bananas { get; set; }
         void EatBananas(int amount);
-        void AddBananas(int amount);
+
+        /// <summary>
+        /// Adds amount of Bananas to the current user
+        /// </summary>
+        /// <param name="amount">Amount of Bananas to add</param>
+        /// <returns></returns>
+        Task AddBananas(int amount);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Int Bananas</returns>
         Task GetBananas();
     }
 }

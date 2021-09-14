@@ -27,12 +27,16 @@ namespace BlazorFirstBlood.Client.Services
 
         void BananasChanged() => OnChange.Invoke();
 
-        public void AddBananas(int amount)
+        
+        public async Task AddBananas(int amount)
         {
-            Bananas += amount;
+            var result = await this.http.PutAsJsonAsync<int>("api/user/addBananas", amount);
+            Bananas = await result.Content.ReadFromJsonAsync<int>();
             BananasChanged();
         }
 
+
+       
         public async Task GetBananas()
         {
             Bananas = await this.http.GetFromJsonAsync<int>("api/user/getBananas");

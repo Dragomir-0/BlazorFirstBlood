@@ -11,7 +11,9 @@ namespace BlazorFirstBlood.Client.Services
         
         public IList<Unit> Units { get; set; }
         public IList<UserUnit> MyUnits { get; set; }
-        void AddUnit(int unitId);
+        Task AddUnit(int unitId);
         Task LoadUnitsAsync();
+        Task LoadUserUnitsAsync();
+        Task ReviveArmy();
     }
 }
