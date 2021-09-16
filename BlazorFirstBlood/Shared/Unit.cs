@@ -14,5 +14,6 @@ namespace BlazorFirstBlood.Shared
         public int Defense { get; set; }
         public int HitPoints { get; set; } = 100;
         public int BananaCost { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

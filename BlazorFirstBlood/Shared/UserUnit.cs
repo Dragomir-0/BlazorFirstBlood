@@ -13,5 +13,6 @@ namespace BlazorFirstBlood.Shared
         public Unit Unit { get; set; }
         public int UnitID { get; set; }
         public int HitPoints { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

@@ -34,15 +34,16 @@ namespace BlazorFirstBlood.Server.Controllers
         {
             var attacker = await this.utilityService.GetUser();
             var opponent = await this.context.Users.FindAsync(opponentId);
+
             if (opponent == null || opponent.IsDeleted)
             {
-                return NotFound("Opponent not available.");
+                return NotFound($"Opponent not available.");
             }
 
             var result = new BattleResults();
             await Fight(attacker, opponent, result);
-
-            return Ok();
+            
+            return Ok(result);
         }
 
         #endregion
@@ -78,7 +79,7 @@ namespace BlazorFirstBlood.Server.Controllers
                 else
                 {
                     opponentDamageSum +=
-                        FightRound(opponent, attacker, attackerArmy, opponentArmy, result);
+                        FightRound(opponent, attacker, opponentArmy, attackerArmy, result);
                 }
             }
 

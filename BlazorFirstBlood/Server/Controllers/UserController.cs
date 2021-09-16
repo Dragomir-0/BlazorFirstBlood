@@ -77,6 +77,32 @@ namespace BlazorFirstBlood.Server.Controllers
 
             return Ok(response);
         }
+
+        [HttpGet("history")]
+        public async Task<IActionResult> GetHistory()
+        {
+            var user = await this.utitlityService.GetUser();
+            var battles = await this.context.Battles
+                .Where(battle => battle.AttackerId == user.Id || battle.OpponentId == user.Id)
+                .Include(Battle => Battle.Attacker)
+                .Include(Battle => Battle.Opponent)
+                .Include(Battle => Battle.Winner)
+                .ToListAsync();
+            var history = battles.Select(battle => new BattleHistoryEntry
+            {
+                BattleId = battle.Id,
+                AttackerId = battle.AttackerId,
+                OpponentId = battle.OpponentId,
+                YouWon = battle.WinnerId == user.Id,
+                AttackerName = battle.Attacker.Username,
+                OpponentName = battle.Opponent.Username,
+                RoundsFought = battle.RoundsFought,
+                WinnerDamage = battle.WinnerDamage,
+                BattleDate = battle.BattleDate
+            });
+            return Ok(history.OrderByDescending(h => h.BattleDate));
+        }
+
         #endregion Requests
     }
 }

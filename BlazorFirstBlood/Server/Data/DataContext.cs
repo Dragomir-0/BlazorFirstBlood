@@ -28,6 +28,8 @@ namespace BlazorFirstBlood.Server.Data
                 .HasOne(b => b.Winner)
                 .WithMany()
                 .OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<UserUnit>()
+                .Ignore(u => u.ImageUrl);
         }
         //Create Tables
         public DbSet<Unit> Units { get; set; }

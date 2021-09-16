@@ -25,7 +25,7 @@ namespace BlazorFirstBlood.Server.Services
         {
             var userId = int.Parse(this.httpContextAccessor.HttpContext.User
                     .FindFirstValue(ClaimTypes.NameIdentifier));
-            var user = await this.context.Users.FirstOrDefaultAsync(u => u.Id == 1);
+            var user = await this.context.Users.FirstOrDefaultAsync(u => u.Id == userId);
             return user;
         }
     }

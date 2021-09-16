@@ -1,5 +1,4 @@
-﻿
-@page "/army"
+﻿@page "/army"
 @inject IUnitService UnitService
 @attribute [Authorize]
 
@@ -29,15 +28,46 @@
     </table>
     <center>
         <button class="btn btn-success" @onclick="ReviveArmy">
-            Revive your army (1000 <img style="max-height: 1.2em" src="Icons/banana.png"/>)
+            Revive your army (1000 <img style="max-height: 1.2em" src="Icons/banana.png" />)
         </button>
+        @*<RadzenButton Text="@text"></RadzenButton>*@
     </center>
-    }
+
+    @*<RadzenButton Text="Reset" Click="@Reset" Style="margin-bottom: 20px;" />*@
+<!--<p>@UnitService.MyUnits[0].Unit</p>
+    <RadzenDataGrid 
+        Data="UnitService.MyUnits" 
+        TItem="UserUnit" 
+        AllowFiltering="true" 
+        AllowColumnResize="true" 
+        AllowSorting="true"
+    >
+        <Columns>
+            <RadzenDataGridColumn TItem="UserUnit" Title="Photo" Sortable="false" Filterable="false" Width="200px">
+                <Template Context="data">
+                    <RadzenImage Path="data.Unit.ImageUrl" style="width: 40px; height: 40px; border-radius: 8px;" />
+                </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="UserUnit" Property="Unit.ImageUrl" Title="Employee">
+                <Template Context="userUnit">
+                    <RadzenImage Path="@userUnit.Unit?.ImageUrl" style="width: 40px; height: 40px; border-radius: 8px;" />
+                @userUnit.Unit.ImageUrl
+                </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="UserUnit" Property="UserID" Title="Test" Sortable="true" />
+            <RadzenDataGridColumn TItem="UserUnit" Property="Unit" Title="Two" />
+        </Columns>
+    </RadzenDataGrid>-->
+
+}
 else
 {
     <span>Loading Units...</span>
 }
 @code {
+
+
+
     protected override async Task OnInitializedAsync()
     {
         await UnitService.LoadUnitsAsync();
@@ -48,4 +78,6 @@ else
     {
         await UnitService.ReviveArmy();
     }
+
+
 }

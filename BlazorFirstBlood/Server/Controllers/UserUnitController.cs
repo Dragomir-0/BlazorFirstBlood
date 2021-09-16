@@ -32,6 +32,7 @@ namespace BlazorFirstBlood.Server.Controllers
             var user = await utilityServices.GetUser();
             var userUnits = await this.context.UserUnits
                 .Where(unit => unit.UserID == user.Id)
+                .Include(unit => unit.Unit)
                 .ToListAsync();
 
             int bananaCost = 1000;
@@ -91,6 +92,7 @@ namespace BlazorFirstBlood.Server.Controllers
             var user = await this.utilityServices.GetUser();
             var userUnits = await this.context.UserUnits
                 .Where(unit => unit.UserID == user.Id)
+                .Include(unit => unit.Unit)
                 .ToListAsync();
 
             var response = userUnits.Select(

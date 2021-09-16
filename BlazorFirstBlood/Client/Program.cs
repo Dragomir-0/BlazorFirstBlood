@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Blazored.Toast;
 using Microsoft.AspNetCore.Components.Authorization;
 using Blazored.LocalStorage;
+using Radzen;
 
 namespace BlazorFirstBlood.Client
 {
@@ -21,7 +22,6 @@ namespace BlazorFirstBlood.Client
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
-
             builder.Services.AddBlazoredToast();
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
@@ -32,6 +32,12 @@ namespace BlazorFirstBlood.Client
             builder.Services.AddAuthorizationCore();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<ILeaderboardService, LeaderboardService>();
+            builder.Services.AddScoped<IBattleService, BattleService>();
+
+            builder.Services.AddScoped<DialogService>();
+            builder.Services.AddScoped<NotificationService>();
+            builder.Services.AddScoped<TooltipService>();
+            builder.Services.AddScoped<ContextMenuService>();
 
             await builder.Build().RunAsync();
         }

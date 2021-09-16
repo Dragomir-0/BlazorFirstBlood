@@ -46,7 +46,7 @@ namespace BlazorFirstBlood.Server.Data
             return response;
         }
 
-        public async Task<ServiceResponse<int>> Register(User user, string password)
+        public async Task<ServiceResponse<int>> Register(User user, string password, int startUnitId)
         {
             if (await UserExists(user.Email)) return new ServiceResponse<int> { Success = false, Message = "User already exists" };
 
@@ -57,6 +57,8 @@ namespace BlazorFirstBlood.Server.Data
 
             this.context.Users.Add(user);
             await this.context.SaveChangesAsync();
+
+            await AddStartingUnit(user, startUnitId);
 
             return new ServiceResponse<int> { Data = user.Id, Message = "Registration successful" };
         }
@@ -111,6 +113,20 @@ namespace BlazorFirstBlood.Server.Data
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
             return jwt;
+        }
+
+
+        private async Task AddStartingUnit(User user, int startUnitId)
+        {
+            var unit = await this.context.Units.FirstOrDefaultAsync<Unit>(u => u.Id == startUnitId);
+
+            this.context.UserUnits.Add(new UserUnit
+            {
+                UnitID = unit.Id,
+                UserID = user.Id,
+                HitPoints = unit.HitPoints
+            });
+            await this.context.SaveChangesAsync();
         }
     }
 }
